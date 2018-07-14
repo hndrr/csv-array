@@ -25,10 +25,10 @@
       <br/>
       <span>出力方法 :</span>
       <select name="vartype" size="4">
-      	<option value="print">print</option>
-      	<option value="vardump">var_dump</option>
       	<option value="varexport" selected>var_export</option>
         <option value="jsonencode">json_encode</option>
+      	<option value="print">print</option>
+      	<option value="vardump">var_dump</option>
       </select>
       <br />
       <br />

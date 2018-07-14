@@ -7,6 +7,16 @@
     <title>CSV array</title>
   </head>
   <body>
+    <style type="text/css">
+      textarea {
+        margin: 20px 0px;
+        padding: 10px;
+        min-width: 400px;
+        min-height: 600px;
+        font-size: 16px;
+      }
+    </style>
+    
     <p><?php
     setlocale(LC_ALL, 'ja_JP.UTF-8');
 
@@ -59,26 +69,26 @@
          if(isset($_POST['vartype'])) {
            $sendform = $_POST['vartype'];
            switch ($sendform) {
-           case 'print':
-              print('<pre>');
-              print_r( $res );
-              print('</pre>');
-              break;
-           case 'vardump':
-              print('<pre>');
-              var_dump( $res );
-              print('</pre>');
-              break;
-           case 'varexport':
-              print('<pre>');
-              var_export( $res );
-              print('</pre>');
-              break;
-           case 'jsonencode':
-              print('<pre>');
-              print_r(json_encode( $res , JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES));
-              print('</pre>');
-              break;
+             case 'vardump':
+                print('<pre>');
+                var_dump( $res );
+                print('</pre>');
+                break;
+             case 'varexport':
+                print('<textarea>');
+                var_export( $res );
+                print('</textarea>');
+                break;
+             case 'print':
+                print('<textarea>');
+                print_r( $res );
+                print('</textarea>');
+                break;
+             case 'jsonencode':
+                print('<textarea>');
+                print_r(json_encode( $res , JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES));
+                print('</textarea>');
+                break;
            }
          }
 
