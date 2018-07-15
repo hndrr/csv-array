@@ -33,60 +33,67 @@
         $file = $_FILES["csvfile"]["tmp_name"];
         echo "Encoding：" , mb_detect_encoding($file) , "<br />";
 
-          $fp  = fopen($file, "r");
-          rewind($fp);
+        $fp  = fopen($file, "r");
+        rewind($fp);
 
-          if (isset($_POST['csvkey'])) {
-            $titles = fgetcsv($fp);
-            //Excelで作ったcsvの場合変換
-            if (isset($_POST['excel']) || isset($_POST['vartype']) == 'jsonencode') {
-              mb_convert_variables("UTF-8", "SJIS", $titles);
-            }
-            while($line = fgetcsv($fp)) {
-              //Excelで作ったcsvの場合変換
-              if (isset($_POST['excel']) || isset($_POST['vartype']) == 'jsonencode') {
-                mb_convert_variables("UTF-8", "SJIS", $line);
-              }
-              $res[] = array_combine($titles, $line);
-            }
-          }else{
-            while($line = fgetcsv($fp)) {
-              //Excelで作ったcsvの場合変換
-              if (isset($_POST['excel']) || isset($_POST['vartype']) == 'jsonencode') {
-                mb_convert_variables("UTF-8", "SJIS", $line);
-              }
-              $res[] = $line;
-            }
+        if (isset($_POST['csvkey'])) {
+          $titles = fgetcsv($fp);
+          //Excelで作ったcsvまたはjson出力の場合変換
+          if (isset($_POST['excel']) || isset($_POST['vartype']) == 'jsonencode') {
+            mb_convert_variables("UTF-8", "SJIS", $titles);
           }
+          while($line = fgetcsv($fp)) {
+            //Excelで作ったcsvまたはjson出力の場合変換
+            if (isset($_POST['excel']) || isset($_POST['vartype']) == 'jsonencode') {
+              mb_convert_variables("UTF-8", "SJIS", $line);
+            }
+            $res[] = array_combine($titles, $line);
+          }
+        }else{
+          while($line = fgetcsv($fp)) {
+            //Excelで作ったcsvまたはjson出力の場合変換
+            if (isset($_POST['excel']) || isset($_POST['vartype']) == 'jsonencode') {
+              mb_convert_variables("UTF-8", "SJIS", $line);
+            }
+            $res[] = $line;
+          }
+        }
 
-         //出力形式
-         if(isset($_POST['vartype'])) {
-           $sendform = $_POST['vartype'];
-           switch ($sendform) {
-             case 'vardump':
-                print('<pre>');
-                var_dump( $res );
-                print('</pre>');
-                break;
-             case 'varexport':
-                print('<textarea>');
-                var_export( $res );
-                print('</textarea>');
-                break;
-             case 'print':
-                print('<textarea>');
-                print_r( $res );
-                print('</textarea>');
-                break;
-             case 'jsonencode':
-                print('<textarea>');
-                print_r(json_encode( $res , JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES));
-                print('</textarea>');
-                break;
-           }
+       //出力形式
+       if(isset($_POST['vartype'])) {
+         $sendform = $_POST['vartype'];
+         
+         if(isset($_POST['keyid'])) {
+          $keyid = $_POST['keyid'];
          }
+         //指定keyidで置換
+         $array_column = array_column( $res, null, $keyid );
+         
+         switch ($sendform) {
+           case 'varexport':
+              print('<textarea>');
+              var_export( $array_column );
+              print('</textarea>');
+              break;
+           case 'print':
+              print('<textarea>');
+              print_r( $array_column );
+              print('</textarea>');
+              break;
+           case 'jsonencode':
+              print('<textarea>');
+              print_r( json_encode( $array_column , JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES) );
+              print('</textarea>');
+              break;
+           case 'vardump':
+              print('<pre>');
+              var_dump( $array_column );
+              print('</pre>');
+              break;
+         }
+       }
 
-         fclose($fp);
+       fclose($fp);
 
       } else {
         echo 'CSVファイルのみ対応しています。';
