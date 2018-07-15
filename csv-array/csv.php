@@ -18,7 +18,7 @@
       <span>（漢字などが文字化けするとき）ExcelのCSV(ShiftJIS)の場合 :</span>
       <input type="checkbox" name="excel" value="excel">
       <br />
-      CSV1行目をkeyとして変換、指定idを多次元配列のkeyにする :
+      CSV1行目をkeyとして変換、指定idのvalueを多次元配列のkeyにする :
       <input type="checkbox" name="csvkey" value="csvkey">
       id : <input type="text" name="keyid" value="">
       <br/>

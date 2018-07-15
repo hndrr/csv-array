@@ -66,8 +66,17 @@
          if(isset($_POST['keyid'])) {
           $keyid = $_POST['keyid'];
          }
+         
          //指定keyidで置換
          $array_column = array_column( $res, null, $keyid );
+
+         if(isset($_POST['keyid'])) {
+          //指定keyid列を削除
+          function array_col_delete(&$row, $key, $keyid) {
+            unset($row[$keyid]);
+          }
+          array_walk($array_column, "array_col_delete", $keyid);
+         }
          
          switch ($sendform) {
            case 'varexport':
