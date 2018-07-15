@@ -39,16 +39,12 @@
           if (isset($_POST['csvkey'])) {
             $titles = fgetcsv($fp);
             //Excelで作ったcsvの場合変換
-            if (isset($_POST['excel'])) {
-                mb_convert_variables("UTF-8", "SJIS", $titles);
-            }elseif(isset($_POST['vartype']) == 'jsonencode') {
-                mb_convert_variables("UTF-8", "SJIS", $titles);
+            if (isset($_POST['excel']) || isset($_POST['vartype']) == 'jsonencode') {
+              mb_convert_variables("UTF-8", "SJIS", $titles);
             }
             while($line = fgetcsv($fp)) {
               //Excelで作ったcsvの場合変換
-              if (isset($_POST['excel'])) {
-                mb_convert_variables("UTF-8", "SJIS", $line);
-              }elseif(isset($_POST['vartype']) == 'jsonencode') {
+              if (isset($_POST['excel']) || isset($_POST['vartype']) == 'jsonencode') {
                 mb_convert_variables("UTF-8", "SJIS", $line);
               }
               $res[] = array_combine($titles, $line);
@@ -56,9 +52,7 @@
           }else{
             while($line = fgetcsv($fp)) {
               //Excelで作ったcsvの場合変換
-              if (isset($_POST['excel'])) {
-                mb_convert_variables("UTF-8", "SJIS", $line);
-              }elseif(isset($_POST['vartype']) == 'jsonencode') {
+              if (isset($_POST['excel']) || isset($_POST['vartype']) == 'jsonencode') {
                 mb_convert_variables("UTF-8", "SJIS", $line);
               }
               $res[] = $line;
