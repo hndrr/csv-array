@@ -18,8 +18,11 @@
         width: 100px;
         height: 25px;
       }
+      .output{
+        line-height: 36px;
+      }
       .button.is-link{
-        margin: 105px 0 0 30px;
+        margin: 0 0 0 16px;
       }
     </style>
     <div class="content">
@@ -58,9 +61,9 @@
           </li>
         </ul>
         <br />
-        <span>出力方法 :</span>
-        <div class="select is-multiple">
-          <select name="vartype" size="4" multiple>
+        <span class="output">出力方法 :</span>
+        <div class="select">
+          <select name="vartype">
           	<option value="varexport" selected>var_export</option>
             <option value="jsonencode">json_encode</option>
           	<option value="print">print</option>
