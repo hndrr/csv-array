@@ -5,19 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>CSV array</title>
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css">
   </head>
   <body>
     <style type="text/css">
+      .content{
+        margin: 20px;
+      }
       textarea {
         margin: 20px 0px;
         padding: 10px;
-        min-width: 400px;
-        min-height: 600px;
         font-size: 16px;
       }
     </style>
     
-    <p><?php
+    <div class="content">
+    <?php
     setlocale(LC_ALL, 'ja_JP.UTF-8');
 
     if (is_uploaded_file($_FILES["csvfile"]["tmp_name"])) {
@@ -68,7 +71,7 @@
          }
          
          //指定keyidで置換
-         $array_column = array_column( $res, null, $keyid );
+         $array_column = array_column($res, null, $keyid);
 
          if(isset($_POST['keyid'])) {
           //指定keyid列を削除
@@ -80,17 +83,17 @@
          
          switch ($sendform) {
            case 'varexport':
-              print('<textarea>');
+              print('<textarea class="textarea" rows="20">');
               var_export( $array_column );
               print('</textarea>');
               break;
            case 'print':
-              print('<textarea>');
+              print('<textarea class="textarea" rows="20">');
               print_r( $array_column );
               print('</textarea>');
               break;
            case 'jsonencode':
-              print('<textarea>');
+              print('<textarea class="textarea" rows="20">');
               print_r( json_encode( $array_column , JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES) );
               print('</textarea>');
               break;
@@ -110,6 +113,7 @@
     } else {
       echo "ファイルが選択されていません。";
     }
-    ?></p>
+    ?>
+    </div>
   </body>
   </html>
