@@ -7,14 +7,17 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>CSV array</title>
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css">
-    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
   </head>
   <body>
     <style type="text/css">
-      .content{
+      .content {
         margin: 20px;
       }
-      .input {
+      .file-name {
+        min-width: 100px;
+      }
+      .input[name="keyid"] {
         width: 100px;
         height: 25px;
       }
@@ -29,21 +32,25 @@
       <form action="uploadcsv.php" method="post" enctype="multipart/form-data" >
         <h2>CSV => PHP array変換君㌼</h2>
         <p>いろんな配列形式に変換します</p>
+        
         <div class="field">
-          <div class="file is-primary">
+          <div class="file is-primary has-name">
             <label class="file-label">
-              <input class="file-input" type="file" name="csvfile" size="30" />
+              <input id="file" class="file-input" type="file" name="csvfile">
               <span class="file-cta">
                 <span class="file-icon">
                   <i class="fas fa-file-upload"></i>
                 </span>
                 <span class="file-label">
-                  CSV file
+                  CSV file…
                 </span>
+              </span>
+              <span id="filename" class="file-name">
               </span>
             </label>
           </div>
         </div>
+
         <br />
         <h4>OPTION</h4>
         <ul>
@@ -77,5 +84,13 @@
       <br />
       <p>PHPバージョン : <?php echo phpversion();?></p>
     </div>
+    <script>
+      var file = document.getElementById("file");
+      file.onchange = function() {
+        if(file.files.length > 0) {
+          document.getElementById('filename').innerHTML = file.files[0].name;
+        }
+      };
+    </script>
   </body>
   </html>
