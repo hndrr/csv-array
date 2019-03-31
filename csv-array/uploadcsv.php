@@ -87,6 +87,16 @@
               var_export( $array_column );
               print('</textarea>');
               break;
+           case 'varexportshort':
+              $v = var_export($array_column, true);
+              $v = str_replace('array (','[', $v);
+              $v = str_replace(')',']', $v);
+
+              print('<textarea class="textarea" rows="20">');
+              //var_export( $array_column );
+              echo $v;
+              print('</textarea>');
+              break;
            case 'print':
               print('<textarea class="textarea" rows="20">');
               print_r( $array_column );

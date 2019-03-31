@@ -1,4 +1,3 @@
-
   <!DOCTYPE html>
   <html lang="en">
   <head>
@@ -72,6 +71,7 @@
         <div class="select">
           <select name="vartype">
           	<option value="varexport" selected>var_export</option>
+          	<option value="varexportshort">var_export (short array)</option>
             <option value="jsonencode">json_encode</option>
           	<option value="print">print</option>
           	<option value="vardump">var_dump</option>
